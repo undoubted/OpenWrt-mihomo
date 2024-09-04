@@ -164,7 +164,7 @@ return view.extend({
             o.value('subscription:' + subscription['.name'], _('Subscription:') + subscription.name);
         }
 
-        o = s.option(form.Flag, 'keep_updated', _('Keep Updated'), _('Download latest subscription/file before start.'));
+        o = s.option(form.Flag, 'keep_profile_updated', _('Keep Profile Updated'), _('Download latest profile before start.'));
         o.rmempty = false;
         o.depends({ profile: /^subscription:/ });
         o.depends({ profile: /^http:/ });
