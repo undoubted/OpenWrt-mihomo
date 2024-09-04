@@ -82,6 +82,12 @@ msgstr "配置文件保持最新"
 msgid "Download latest profile before start."
 msgstr "启动前下载配置文件。"
 
+msgid "Profile Update Interval"
+msgstr "配置文件更新间隔"
+
+msgid "Force update profile after specified seconds, 0 for disabled."
+msgstr "在指定秒数后强制更新配置文件，0 不更新。"
+
 msgid "Upload Profile"
 msgstr "上传配置文件"
 

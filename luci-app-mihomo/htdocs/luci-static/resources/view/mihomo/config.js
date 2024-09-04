@@ -170,6 +170,11 @@ return view.extend({
         o.depends({ profile: /^http:/ });
         o.depends({ profile: /^https:/ });
 
+        o = s.option(form.Value, 'profile_update_interval', _('Profile Update Interval'), _('Force update profile after specified seconds, 0 for disabled.'));
+        o.datatype = 'integer';
+        o.placeholder = '86400';
+        o.depends('keep_profile_updated', '0');
+
         o = s.option(form.FileUpload, 'upload_profile', _('Upload Profile'));
         o.root_directory = mihomo.profilesDir;
 
