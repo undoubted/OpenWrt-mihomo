@@ -4,45 +4,32 @@
 
 # check env
 if [[ ! -x "/bin/opkg" || ! -x "/sbin/fw4" ]]; then
-	echo "Only supports OpenWrt build with firewall4!"
+	echo "only supports OpenWrt build with firewall4!"
 	exit 1
 fi
 
-# define result
-result=0
+# include openwrt_release
+. /etc/openwrt_release
 
-# traverse architectures
-while read arch; do
-	echo "$arch: start"
-	# download
-	tarball="mihomo_${arch}.tar.gz"
-	echo "$arch: download tarball"
-	curl -s -L -o "$tarball" "https://mirror.ghproxy.com/https://github.com/morytyann/OpenWrt-mihomo/releases/latest/download/$tarball"
-	if [ "$?" != 0 ]; then
-		continue
-	fi
-	# extract
-	echo "$arch: extract tarball"
-	tar -zxf "$tarball" > /dev/null 2>&1
-	if [ "$?" != 0 ]; then
-		continue
-	fi
-	# install
-	echo "$arch: install ipks"
-	opkg install mihomo_*.ipk && opkg install luci-app-mihomo_*.ipk && opkg install luci-i18n-mihomo-zh-cn_*.ipk
-	if [ "$?" != 0 ]; then
-		continue
-	fi
-	# success
-	echo "Success Install/Update with arch: $arch"
-	result=1
-	break
-done < <(opkg print-architecture | grep -v all | grep -v noarch | cut -d ' ' -f 2)
+# update feeds
+echo "update feeds"
+opkg update
 
-if [ "$result" == 0 ]; then
-	echo "all architectures failed, maybe release is still in building, or just miss/unsupport your arch"
-fi
+# download tarball
+echo "download tarball"
+tarball="mihomo_$DISTRIB_ARCH.tar.gz"
+curl -s -L -o "$tarball" "https://mirror.ghproxy.com/https://github.com/morytyann/OpenWrt-mihomo/releases/latest/download/$tarball"
 
-# cleanup
-rm -f ./mihomo_*.tar.gz
-rm -f ./*mihomo*.ipk
+# extract tarball
+echo "extract tarball"
+tar -x -z -f "$tarball"
+rm -f "$tarball"
+
+# install ipks
+echo "install ipks"
+opkg install mihomo_*.ipk
+opkg install luci-app-mihomo_*.ipk
+opkg install luci-i18n-mihomo-zh-cn_*.ipk
+rm -f *mihomo*.ipk
+
+echo "success"

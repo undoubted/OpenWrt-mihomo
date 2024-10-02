@@ -111,7 +111,7 @@ return view.extend({
         o.depends('scheduled_restart', '1');
 
         o = s.option(form.ListValue, 'profile', _('Choose Profile'));
-        o.rmempty = false;
+        o.optional = true;
 
         for (const profile of profiles) {
             o.value('file:' + profile.name, _('File:') + profile.name);
@@ -269,7 +269,7 @@ return view.extend({
         o.value('debug');
 
         o = s.taboption('general', form.ListValue, 'mode', _('Proxy Mode'));
-        o.value('general', _('Global Mode'));
+        o.value('global', _('Global Mode'));
         o.value('rule', _('Rule Mode'));
         o.value('direct', _('Direct Mode'));
 
@@ -415,6 +415,9 @@ return view.extend({
         o.depends('dns_mode', 'fake-ip');
 
         o = s.taboption('dns', form.Flag, 'dns_respect_rules', _('Respect Rules'));
+        o.rmempty = false;
+
+        o = s.taboption('dns', form.Flag, 'dns_doh_prefer_http3', _('DoH Prefer HTTP/3'));
         o.rmempty = false;
 
         o = s.taboption('dns', form.Flag, 'dns_ipv6', _('IPv6'));
