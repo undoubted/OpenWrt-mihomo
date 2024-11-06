@@ -102,6 +102,10 @@ return view.extend({
         o = s.option(form.Flag, 'enabled', _('Enable'));
         o.rmempty = false;
 
+        o = s.option(form.Value, 'start_delay', _('Start Delay'));
+        o.datatype = 'uinteger';
+        o.placeholder = '0';
+
         o = s.option(form.Flag, 'scheduled_restart', _('Scheduled Restart'));
         o.rmempty = false;
 
@@ -231,7 +235,7 @@ return view.extend({
         o = s.taboption('bypass', form.Value, 'acl_tcp_dport', _('Destination TCP Port to Proxy'));
         o.rmempty = false;
         o.value('0-65535', _('All Port'));
-        o.value('21 22 80 110 143 194 443 465 993 995 8080 8443', _('Commonly Used Port'));
+        o.value('21 22 80 110 143 194 443 465 853 993 995 8080 8443', _('Commonly Used Port'));
 
         o = s.taboption('bypass', form.Value, 'acl_udp_dport', _('Destination UDP Port to Proxy'));
         o.rmempty = false;
@@ -269,7 +273,7 @@ return view.extend({
         o.value('info');
         o.value('debug');
 
-        o = s.taboption('general', form.ListValue, 'mode', _('Proxy Mode'));
+        o = s.taboption('general', form.ListValue, 'mode', _('Mode'));
         o.value('global', _('Global Mode'));
         o.value('rule', _('Rule Mode'));
         o.value('direct', _('Direct Mode'));
@@ -520,7 +524,7 @@ return view.extend({
         o = s.taboption('geox', form.Flag, 'geox_auto_update', _('GeoX Auto Update'));
         o.rmempty = false;
 
-        o = s.taboption('geox', form.Value, 'geox_update_interval', _('GeoX Update Interval'), _('Hour'));
+        o = s.taboption('geox', form.Value, 'geox_update_interval', _('GeoX Update Interval'));
         o.datatype = 'uinteger';
         o.placeholder = '24';
         o.retain = true;
